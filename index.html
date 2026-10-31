@@ -215,6 +215,26 @@ footer .logo{justify-content:center;margin-bottom:12px;color:var(--ink)}
 .cursorGlow{position:fixed;width:500px;height:500px;border-radius:50%;pointer-events:none;z-index:-1;background:radial-gradient(circle,rgba(242,196,109,.09),transparent 60%);translate:-50% -50%;transition:opacity .3s}
 @media(hover:none){.cursorGlow{display:none}}
 
+/* ---------- phone polish ---------- */
+.add,.btn,.step,.peek{white-space:nowrap}
+.pill:not(.on){visibility:hidden;transition:translate .5s var(--ease),visibility 0s .5s}
+.toast{white-space:nowrap;max-width:calc(100vw - 32px);overflow:hidden;text-overflow:ellipsis}
+.rm{padding:8px 0 8px 10px}
+@media(hover:none),(max-width:760px){
+  .fields input,.fields textarea{font-size:16px}
+  .line .step button{width:36px;height:36px}
+  .line{grid-template-columns:56px 1fr auto}.line img{width:56px;height:56px}
+}
+@media(max-width:760px){
+  .toast{top:auto;bottom:calc(92px + env(safe-area-inset-bottom))}
+  .bagOpen .toast{top:calc(12px + env(safe-area-inset-top));bottom:auto}
+  .drawer .dh{padding:18px 20px}.db{padding:8px 20px}.df{padding-inline:20px}
+  #qvBuy{flex-wrap:wrap}#qvBuy>*{flex:1 1 100%}#qvBuy .add,#qvBuy .step,#qvBuy .btn{width:100%;justify-content:center}
+  #qvBuy .step{justify-content:space-between}
+  .hero{min-height:auto;padding-bottom:40px}
+  .stats{gap:22px}
+  .card .peek{opacity:1;transform:none;font-size:.72rem;padding:6px 12px}
+}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:.01ms!important}.rv{opacity:1;transform:none}html{scroll-behavior:auto}}
 </style>
 </head>
@@ -442,9 +462,9 @@ $("#cartBtn").onclick=$("#pill").onclick=openDrawer;
 $("#scrim").onclick=closeAll;
 addEventListener("keydown",e=>{if(e.key==="Escape")closeAll()});
 
-function openDrawer(){closeQV();$("#drawer").classList.add("on");$("#scrim").classList.add("on");$("#drawer").setAttribute("aria-hidden","false");document.body.style.overflow="hidden";render()}
+function openDrawer(){closeQV();$("#toast").classList.remove("on");document.body.classList.add("bagOpen");$("#drawer").classList.add("on");$("#scrim").classList.add("on");$("#drawer").setAttribute("aria-hidden","false");document.body.style.overflow="hidden";render()}
 function closeQV(){$("#qv").classList.remove("on");$("#qv").setAttribute("aria-hidden","true")}
-function closeAll(){closeQV();$("#drawer").classList.remove("on");$("#scrim").classList.remove("on");$("#drawer").setAttribute("aria-hidden","true");document.body.style.overflow="";render()}
+function closeAll(){closeQV();document.body.classList.remove("bagOpen");$("#drawer").classList.remove("on");$("#scrim").classList.remove("on");$("#drawer").setAttribute("aria-hidden","true");document.body.style.overflow="";render()}
 
 /* ---------- quick view ---------- */
 function openQV(id){
