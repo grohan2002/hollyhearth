@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Santa &amp; Friends — Handcrafted Christmas Magic</title>
+<title>Hollyhearth Studio — Handcrafted Christmas Décor</title>
 <meta name="description" content="Multi-colour 3D-printed Christmas coasters and the Santa Belly cookie bowl. Choose your pieces and order in one tap on WhatsApp.">
 <meta name="theme-color" content="#0b0f1f">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,6 +40,7 @@ a{color:inherit}
 .nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:18px clamp(16px,4vw,48px);transition:background .4s,padding .4s,backdrop-filter .4s}
 .nav.solid{background:rgba(11,15,31,.72);backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);padding-block:12px;border-bottom:1px solid var(--line)}
 .logo{font-family:var(--serif);font-size:1.35rem;font-weight:600;text-decoration:none;letter-spacing:.2px;display:flex;align-items:center;gap:10px}
+.logo small{font-family:var(--sans);font-size:.62rem;font-weight:500;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);align-self:center;margin-left:-2px;padding:3px 0 0 8px;border-left:1px solid var(--line)}
 .logo i{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--red),#9d1c1c);font-style:normal;font-size:.95rem;box-shadow:0 0 20px rgba(224,68,62,.5)}
 .nav ul{display:flex;gap:32px;list-style:none}
 .nav ul a{text-decoration:none;font-size:.92rem;color:var(--muted);transition:color .2s}
@@ -50,6 +51,7 @@ a{color:inherit}
 @keyframes bump{40%{transform:scale(1.15)}}
 .badge{min-width:22px;height:22px;padding:0 6px;border-radius:99px;background:var(--gold);color:var(--bg);font-weight:600;font-size:.78rem;display:grid;place-items:center}
 @media(max-width:760px){.nav ul{display:none}}
+@media(max-width:420px){.nav .logo small{display:none}}
 
 /* ---------- hero ---------- */
 .hero{min-height:100svh;display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:40px;padding:120px clamp(20px,6vw,90px) 60px;max-width:1400px;margin:0 auto;position:relative}
@@ -220,7 +222,7 @@ footer .logo{justify-content:center;margin-bottom:12px;color:var(--ink)}
 <div class="sky"></div><canvas id="snow"></canvas><div class="grain"></div><div class="cursorGlow" id="glow"></div>
 
 <nav class="nav" id="nav">
-  <a href="#top" class="logo"><i>✦</i>Santa &amp; Friends</a>
+  <a href="#top" class="logo" aria-label="Hollyhearth Studio home"><i>✦</i>Hollyhearth<small>Studio</small></a>
   <ul><li><a href="#shop">Collection</a></li><li><a href="#how">How to order</a></li><li><a href="#gift">Gifting</a></li></ul>
   <button class="cartBtn" id="cartBtn" aria-label="Open cart">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
@@ -287,9 +289,9 @@ footer .logo{justify-content:center;margin-bottom:12px;color:var(--ink)}
 </section>
 
 <footer>
-  <div class="logo"><i>✦</i>Santa &amp; Friends</div>
+  <div class="logo"><i>✦</i>Hollyhearth<small>Studio</small></div>
   <p>Handcrafted 3D-printed Christmas décor · Orders, payment &amp; delivery confirmed on WhatsApp</p>
-  <p style="margin-top:8px;opacity:.6">© <span id="yr"></span> Santa &amp; Friends</p>
+  <p style="margin-top:8px;opacity:.6">© <span id="yr"></span> Hollyhearth Studio</p>
 </footer>
 
 <!-- drawer -->
@@ -358,7 +360,7 @@ const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const fmt=n=>CURRENCY+n.toLocaleString("en-IN");
 const byId=Object.fromEntries(PRODUCTS.map(p=>[p.id,p]));
 const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
-let bag={}; try{bag=JSON.parse(localStorage.getItem("sf-bag"))||{}}catch(e){}
+let bag={}; try{bag=JSON.parse(localStorage.getItem("hh-bag"))||{}}catch(e){}
 for(const k in bag) if(!byId[k]) delete bag[k];
 $("#yr").textContent=new Date().getFullYear();
 
@@ -389,7 +391,7 @@ $("#grid").innerHTML=PRODUCTS.map(p=>`
 function change(id,d,src){
   const before=bag[id]||0, q=Math.max(0,Math.min(99,before+d));
   if(q) bag[id]=q; else delete bag[id];
-  localStorage.setItem("sf-bag",JSON.stringify(bag));
+  localStorage.setItem("hh-bag",JSON.stringify(bag));
   if(d>0&&src) fly(id,src);
   if(d>0&&!before) toast(`Added ${byId[id].name}`);
   render();
@@ -415,7 +417,7 @@ function link(items,count,total){
   if(!items){items=PRODUCTS.filter(p=>bag[p.id]);count=items.reduce((a,p)=>a+bag[p.id],0);total=items.reduce((a,p)=>a+bag[p.id]*p.price,0)}
   const wa=$("#wa");
   if(!count){wa.href="#";wa.setAttribute("aria-disabled","true");return}
-  const L=["Hi Santa & Friends! 🎄 I'd like to place an order:",""];
+  const L=["Hi Hollyhearth Studio! 🎄 I'd like to place an order:",""];
   items.forEach(p=>L.push(`• ${p.name} × ${bag[p.id]} = ${fmt(bag[p.id]*p.price)}`));
   L.push("",`*Total: ${fmt(total)}*`);
   const n=$("#name").value.trim(), a=$("#addr").value.trim();
@@ -432,7 +434,7 @@ $("#wa").addEventListener("click",()=>toast("Opening WhatsApp… just hit send �
 document.addEventListener("click",e=>{
   const t=e.target;
   const b=t.closest("[data-d]"); if(b){change(b.dataset.id,+b.dataset.d,b);return}
-  const r=t.closest("[data-rm]"); if(r){delete bag[r.dataset.rm];localStorage.setItem("sf-bag",JSON.stringify(bag));render();return}
+  const r=t.closest("[data-rm]"); if(r){delete bag[r.dataset.rm];localStorage.setItem("hh-bag",JSON.stringify(bag));render();return}
   const q=t.closest("[data-quick]"); if(q){openQV(q.dataset.quick);return}
   if(t.closest("[data-close]")){closeAll()}
 });
